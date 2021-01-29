@@ -1,6 +1,8 @@
 package com.nikhilpatokar.codeassignment.network;
 
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import retrofit2.Response;
@@ -10,13 +12,13 @@ import retrofit2.Response;
  * @param <T>
  */
 public class ApiResponse<T> {
-
+    private static final String TAG = "ApiResponse";
     public ApiResponse<T> create(Throwable error){
-        return new ApiErrorResponse<>(error.getMessage().equals("") ? error.getMessage() : "Unknown error\nCheck network connection");
+        return new ApiErrorResponse<>(error.getMessage().equals("") ? error.getMessage() : "Unknown Error");
     }
 
     public ApiResponse<T> create(Response<T> response){
-
+        Log.d(TAG, "create() called with: response CODE= [" + response.code() + "]");
         if(response.isSuccessful()){
             T body = response.body();
 

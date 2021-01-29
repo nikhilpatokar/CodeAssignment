@@ -20,6 +20,7 @@ public class PersonListViewModel extends AndroidViewModel {
 
     private static final String TAG = "PersonListViewModel";
 
+    private int noOfPersons = 10;
     public static final String QUERY_EXHAUSTED = "No more results.";
 
     private MediatorLiveData<Resource<List<Result>>> results = new MediatorLiveData<>();
@@ -43,14 +44,19 @@ public class PersonListViewModel extends AndroidViewModel {
     }
 
     public void fetchPersonData(){
+        Log.d(TAG, "fetchPersonData() called for "+noOfPersons);
         executeSearch();
+    }
+
+    public void updatePersonData(String status,int id){
+        resultRepository.updatePersonData(status,id);
     }
 
     private void executeSearch(){
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
-        final LiveData<Resource<List<Result>>> repositorySource = resultRepository.searchPersonApi(10);
+        final LiveData<Resource<List<Result>>> repositorySource = resultRepository.searchPersonApi(noOfPersons);
         results.addSource(repositorySource, new Observer<Resource<List<Result>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<Result>> listResource) {
@@ -95,5 +101,11 @@ public class PersonListViewModel extends AndroidViewModel {
                 }
             }
         });
+    }
+
+    public void searchNextPerson() {
+        Log.d(TAG, "searchNextPerson() called");
+        noOfPersons = noOfPersons + 10;
+        executeSearch();
     }
 }

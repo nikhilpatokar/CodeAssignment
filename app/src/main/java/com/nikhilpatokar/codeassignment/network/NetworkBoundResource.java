@@ -131,7 +131,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                 }
                 else if(requestObjectApiResponse instanceof ApiResponse.ApiErrorResponse){
                     Log.d(TAG, "onChanged: ApiErrorResponse.");
-                    results.addSource(dbSource, new Observer<CacheObject>() {
+                    results.addSource(loadFromDb(), new Observer<CacheObject>() {
                         @Override
                         public void onChanged(@Nullable CacheObject cacheObject) {
                             setValue(

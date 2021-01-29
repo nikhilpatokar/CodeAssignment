@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity implements OnActionTakenListener 
                                 Log.e(TAG, "onChanged: cannot refresh the cache.");
                                 Log.e(TAG, "onChanged: ERROR message: " + listResource.message);
                                 Log.e(TAG, "onChanged: status: ERROR, #recipes: " + listResource.data.size());
+                                showToast(listResource.message);
                                 showProgressBar(false);
                                 break;
                             }
@@ -96,9 +97,10 @@ public class MainActivity extends BaseActivity implements OnActionTakenListener 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
+                Log.d(TAG, "onScrollStateChanged() called with: recyclerView = [" + recyclerView + "], newState = [" + newState + "]");
                 if(!mRecyclerView.canScrollVertically(1)){
-            //        mRecipeListViewModel.searchNextPage();
+                    Log.d(TAG, "Should Call !!!!");
+                    mPersonListViewModel.searchNextPerson();
                 }
             }
         });
@@ -119,5 +121,10 @@ public class MainActivity extends BaseActivity implements OnActionTakenListener 
     @Override
     public void onAcceptClick(int position, boolean flag) {
         Log.d(TAG, "onAcceptClick() called with: position = [" + position + "], flag = [" + flag + "]");
+        Result result = mAdapter.getSelectedResult(position);
+        if(flag)
+            mPersonListViewModel.updatePersonData("Accepted",result.get_id());
+        else
+            mPersonListViewModel.updatePersonData("Rejected",result.get_id());
     }
 }

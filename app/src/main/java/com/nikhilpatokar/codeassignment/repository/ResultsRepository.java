@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.nikhilpatokar.codeassignment.models.Result;
 import com.nikhilpatokar.codeassignment.network.ApiResponse;
@@ -39,6 +40,17 @@ public class ResultsRepository {
         resultDao = PersonDatabase.getInstance(context).getResultDao();
     }
 
+    public void updatePersonData(String status,int id){
+        AppExecutors appExecutors = AppExecutors.getInstance();
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                resultDao.updateStatus(status,id);
+            }
+        });
+
+    }
+
 
     public LiveData<Resource<List<Result>>> searchPersonApi(final int noOfResults){
         return new NetworkBoundResource<List<Result>, PersonResponse>(AppExecutors.getInstance()){
@@ -52,7 +64,7 @@ public class ResultsRepository {
                     int index = 0;
                     for(long rowid: resultDao.insertResults((Result[]) (item.getResults().toArray(results)))){
                         if(rowid == -1){
-                            Log.d(TAG, "saveCallResult: CONFLICT... This recipe is already in the cache");
+                            Log.d(TAG, "saveCallResult: CONFLICT");
                         }
                         index++;
                     }

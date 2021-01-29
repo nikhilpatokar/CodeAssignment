@@ -7,12 +7,13 @@ import android.os.Parcelable;
 import androidx.room.Dao;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "results")
+@Entity(tableName = "results", indices = {@Index(value = {"login"},unique = true)})
 public class Result implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -53,6 +54,8 @@ public class Result implements Parcelable {
     @SerializedName("nat")
     @Expose
     private String nat;
+
+    private String status = "none";
 
     public Result() {
     }
@@ -195,5 +198,13 @@ public class Result implements Parcelable {
         dest.writeString(phone);
         dest.writeString(cell);
         dest.writeString(nat);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

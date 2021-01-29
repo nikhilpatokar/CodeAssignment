@@ -1,8 +1,10 @@
 package com.nikhilpatokar.codeassignment;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,5 +26,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showProgressBar(boolean visibility){
         mProgressBar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    public void showToast(String message){
+        Toast.makeText(BaseActivity.this, message,Toast.LENGTH_LONG).show();
     }
 }

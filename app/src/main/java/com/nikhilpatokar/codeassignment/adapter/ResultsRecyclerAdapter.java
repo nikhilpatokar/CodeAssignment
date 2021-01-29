@@ -37,6 +37,7 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.mOnActionTakenListener = onActionTakenListener;
         this.requestManager = requestManager;
         this.preloadSizeProvider = viewPreloadSizeProvider;
+        mResults = new ArrayList<>();
     }
 
     @NonNull
@@ -54,69 +55,6 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((ResultViewHolder)viewHolder).onBind(mResults.get(i));
     }
 
-    // display loading during search request
-    public void displayOnlyLoading(){
-        /*clearRecipesList();
-        Recipe recipe = new Recipe();
-        recipe.setTitle("LOADING...");
-        mRecipes.add(recipe);
-        notifyDataSetChanged();*/
-    }
-
-    private void clearRecipesList(){
-        if(mResults == null){
-            mResults = new ArrayList<>();
-        }
-        else{
-            mResults.clear();
-        }
-        notifyDataSetChanged();
-    }
-
-    public void setQueryExhausted(){
-        /*hideLoading();
-        Recipe exhaustedRecipe = new Recipe();
-        exhaustedRecipe.setTitle("EXHAUSTED...");
-        mRecipes.add(exhaustedRecipe);
-        notifyDataSetChanged();*/
-    }
-
-    public void hideLoading(){
-        /*if(isLoading()){
-            if(mRecipes.get(0).getTitle().equals("LOADING...")){
-                mRecipes.remove(0);
-            }
-            else if(mRecipes.get(mRecipes.size() - 1).equals("LOADING...")){
-                mRecipes.remove(mRecipes.size() - 1);
-            }
-            notifyDataSetChanged();
-        }*/
-    }
-
-    // pagination loading
-    public void displayLoading(){
-        /*if(mRecipes == null){
-            mRecipes = new ArrayList<>();
-        }
-        if(!isLoading()){
-            Recipe recipe = new Recipe();
-            recipe.setTitle("LOADING...");
-            mRecipes.add(recipe);
-            notifyDataSetChanged();
-        }*/
-    }
-
-    private boolean isLoading(){
-        /*if(mRecipes != null){
-            if(mRecipes.size() > 0){
-                if(mRecipes.get(mRecipes.size() - 1).getTitle().equals("LOADING...")){
-                    return true;
-                }
-            }
-        }*/
-        return false;
-    }
-
     @Override
     public int getItemCount() {
         if(mResults != null){
@@ -130,14 +68,14 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         notifyDataSetChanged();
     }
 
-    /*public Recipe getSelectedRecipe(int position){
-        if(mRecipes != null){
-            if(mRecipes.size() > 0){
-                return mRecipes.get(position);
+    public Result getSelectedResult(int position){
+        if(mResults != null){
+            if(mResults.size() > 0){
+                return mResults.get(position);
             }
         }
         return null;
-    }*/
+    }
 
     @NonNull
     @Override

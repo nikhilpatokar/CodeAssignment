@@ -20,9 +20,9 @@ public class ServiceGenerator {
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
     private static OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+    //        .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+    //        .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+    //        .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             .retryOnConnectionFailure(false)
             .addInterceptor(logging)
             .build();

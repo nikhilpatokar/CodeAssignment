@@ -61,6 +61,18 @@ public class ResultViewHolder extends RecyclerView.ViewHolder implements View.On
         if(result.getLocation().getCity()+", "+result.getLocation().getCountry() != null) {
             location.setText(result.getLocation().getCity() + ", " + result.getLocation().getCountry());
         }
+        if(result.getStatus().equalsIgnoreCase("none")){
+            accept.setVisibility(View.VISIBLE);
+            reject.setVisibility(View.VISIBLE);
+        }else if(result.getStatus().equalsIgnoreCase("Accepted")){
+            accept.setVisibility(View.VISIBLE);
+            accept.setText("Accepted");
+            reject.setVisibility(View.GONE);
+        }else if(result.getStatus().equalsIgnoreCase("Rejected")){
+            reject.setVisibility(View.VISIBLE);
+            reject.setText("Rejected");
+            accept.setVisibility(View.GONE);
+        }
 
         viewPreloadSizeProvider.setView(image);
     }
@@ -69,10 +81,16 @@ public class ResultViewHolder extends RecyclerView.ViewHolder implements View.On
     public void onClick(View v) {
         switch (v.getId()){
         case R.id.accept_button:
+            accept.setVisibility(View.VISIBLE);
+            accept.setText("Accepted");
+            reject.setVisibility(View.GONE);
             mOnActionTakenListener.onAcceptClick(getAdapterPosition(),true);
         break;
 
         case R.id.reject_button:
+            reject.setVisibility(View.VISIBLE);
+            reject.setText("Rejected");
+            accept.setVisibility(View.GONE);
             mOnActionTakenListener.onAcceptClick(getAdapterPosition(),false);
         break;
 
